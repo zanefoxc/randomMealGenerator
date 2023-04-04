@@ -73,18 +73,24 @@ const ingredientOptions = {
         "Clarified butter", "Cultured butter", "Ghee"
     ]}
     ],
-    oilAndSpiceOptions: [
+    oilOptions: [
         "Olive oil", "Canola oil", "Vegetable oil",
         "Coconut oil", "Sesame oil", "Peanut oil", 
-        "Avocado oil", "Sunflower oil", "Salt",
-        "Pepper", "Cumin", "Paprika",
-        "Chili powder", "Cinnamon", "Garlic powder",
-        "Onion powder", "Oregano", "Basil",
-        "Thyme", "Rosemary", "Bay leaves",
-        "Curry powder"
+        "Avocado oil", "Sunflower oil"
+    ],
+    spiceOptions: [
+        "allspice", "anise seed", "caraway", "cardamom", "cayenne pepper",
+        "celery seed", "chervil", "chili powder", "cinnamon", "cloves",
+        "coriander", "cumin", "curry powder", "dill seed", "fennel",
+        "fenugreek", "garam masala", "garlic powder", "ginger", "mustard seed",
+        "nutmeg", "onion powder", "oregano", "paprika", "paprika (smoked)",
+        "parsley", "poppy seed", "red pepper flakes", "rosemary", "saffron",
+        "sage", "salt", "savory", "star anise", "sumac",
+        "tarragon", "thyme", "turmeric", "vanilla bean", "wasabi",
+        "white pepper", "black pepper", "cocoa powder"
     ],
     // Once again organized as protein and dairy
-    arrMisc: [
+    miscOptions: [
         { _bread: [
         "Baguette", "Brioche", "Challah",
         "Ciabatta", "Focaccia", "Multigrain",
@@ -136,7 +142,7 @@ const defineComposition = (flavor) => {
             console.log(`${flavor} is invalid please choose from Sweet, Savory, Spicy, Sour, or Bitter`);
             return;
     }
-   const arrIngredients = Object.keys(ingredientOptions);
+   const arrIngredients = Object.keys(ingredientOptions)[Math.floor(Math.random() * Object.keys(ingredientOptions).length) + 1];
 }
 
-console.log(Object.keys(ingredientOptions));
+console.log(arrIngredients = Object.keys(ingredientOptions)[Math.floor(Math.random() * Object.keys(ingredientOptions).length)]);
