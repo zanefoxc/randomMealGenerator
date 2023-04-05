@@ -1,7 +1,7 @@
-// Define an object to hold ingredient options
-const ingredientOptions = {
-    // Create an array of protein objects
-    proteinOptions: [
+// Create an array to hold ingredient option objects
+const ingredientOptions = [
+    // Create an object with assigned id and value which will be used later
+    {id: 1, value: 0, proteinOptions: [
         // Each object has an array of values
         { _meat: [
         "Beef", "Pork", "Lamb",
@@ -26,9 +26,9 @@ const ingredientOptions = {
         "Mung beans", "Red beans", "White beans",
         "Soybeans", "Lentils"
     ]}
-    ],
+    ]},
     // No additional specificity is needed for vegetables, place them all in the same array
-    vegetableOptions: [
+    {id: 2, value: 0, vegetableOptions: [
         "Broccoli", "Carrots", "Tomatoes",
         "Spinach", "Cabbage", "Bell peppers",
         "Cauliflower", "Eggplant", "Zucchini",
@@ -36,8 +36,8 @@ const ingredientOptions = {
         "Onions", "Garlic", "Potatoes",
         "Sweet potatoes", "Beets", "Radishes",
         "Brussels sprouts", "Artichokes"
-    ],
-    fruitOptions: [
+    ]},
+    {id: 3, value: 0, fruitOptions: [
         "Apples", "Bananas",  "Oranges",
         "Grapes", "Pineapple", "Strawberries",
         "Blueberries", "Mangoes", "Watermelon",
@@ -45,9 +45,9 @@ const ingredientOptions = {
         "Plums", "Cherries", "Grapefruit",
         "Papaya", "Cantaloupe", "Apricots",
         "Blackberries", "Raspberries"
-    ],
-    // Create an array of dairy objects then organize them the same way as protein above
-    dairyOptions: [
+    ]},
+    // Create an object for dairy the same way as protein above
+    {id: 4, value: 0, dairyOptions: [
         { _milk: [
         "Whole milk", "Skim milk", "Low-fat milk",
         "Fat-free milk", "Almond milk", "Soy milk",
@@ -72,13 +72,13 @@ const ingredientOptions = {
         "Unsalted butter",  "Salted butter", "Whipped butter",
         "Clarified butter", "Cultured butter", "Ghee"
     ]}
-    ],
-    oilOptions: [
+    ]},
+    {id: 5, value: 0, oilOptions: [
         "Olive oil", "Canola oil", "Vegetable oil",
         "Coconut oil", "Sesame oil", "Peanut oil", 
         "Avocado oil", "Sunflower oil"
-    ],
-    spiceOptions: [
+    ]},
+    {id: 6, value: 0, spiceOptions: [
         "allspice", "anise seed", "caraway", "cardamom", "cayenne pepper",
         "celery seed", "chervil", "chili powder", "cinnamon", "cloves",
         "coriander", "cumin", "curry powder", "dill seed", "fennel",
@@ -88,9 +88,9 @@ const ingredientOptions = {
         "sage", "salt", "savory", "star anise", "sumac",
         "tarragon", "thyme", "turmeric", "vanilla bean", "wasabi",
         "white pepper", "black pepper", "cocoa powder"
-    ],
+    ]},
     // Once again organized as protein and dairy
-    miscOptions: [
+    {id: 7, value: 0, miscOptions: [
         { _bread: [
         "Baguette", "Brioche", "Challah",
         "Ciabatta", "Focaccia", "Multigrain",
@@ -118,10 +118,11 @@ const ingredientOptions = {
         "Ketchup", "Soy sauce", "Worcestershire sauce",
         "Vinegar", "Peanut Butter"
     ]}
-    ]
-}
+    ]}
+]
 
 const defineComposition = (flavor) => {
+    const arrMealComposition = [];
     switch (flavor) {
         case 'Sweet':
             console.log(`You have chosen ${flavor} this will weigh your meal generation appropriately`);
@@ -142,7 +143,11 @@ const defineComposition = (flavor) => {
             console.log(`${flavor} is invalid please choose from Sweet, Savory, Spicy, Sour, or Bitter`);
             return;
     }
-   const arrIngredients = Object.keys(ingredientOptions)[Math.floor(Math.random() * Object.keys(ingredientOptions).length) + 1];
+    for (i = 0; i < 10; i++) {
+        const randomIngredientsId = Object.keys(ingredientOptions)[Math.floor(Math.random() * Object.keys(ingredientOptions).length)];
+        arrMealComposition.push(randomIngredientsId);
+   }
+   console.log(arrMealComposition);
 }
 
-console.log(arrIngredients = Object.keys(ingredientOptions)[Math.floor(Math.random() * Object.keys(ingredientOptions).length)]);
+defineComposition('Sweet');
