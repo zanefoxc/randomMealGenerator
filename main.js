@@ -1,7 +1,7 @@
 // Create an array to hold ingredient option objects
 const ingredientOptions = [
     // Create an object with assigned id and value which will be used later
-    {id: 1, value: 0, proteinOptions: [
+    {id: 0, value: 0, proteinOptions: [
         // Each object has an array of values
         { _meat: [
         "Beef", "Pork", "Lamb",
@@ -28,7 +28,7 @@ const ingredientOptions = [
     ]}
     ]},
     // No additional specificity is needed for vegetables, place them all in the same array
-    {id: 2, value: 0, vegetableOptions: [
+    {id: 1, value: 0, vegetableOptions: [
         "Broccoli", "Carrots", "Tomatoes",
         "Spinach", "Cabbage", "Bell peppers",
         "Cauliflower", "Eggplant", "Zucchini",
@@ -37,7 +37,7 @@ const ingredientOptions = [
         "Sweet potatoes", "Beets", "Radishes",
         "Brussels sprouts", "Artichokes"
     ]},
-    {id: 3, value: 0, fruitOptions: [
+    {id: 2, value: 0, fruitOptions: [
         "Apples", "Bananas",  "Oranges",
         "Grapes", "Pineapple", "Strawberries",
         "Blueberries", "Mangoes", "Watermelon",
@@ -47,7 +47,7 @@ const ingredientOptions = [
         "Blackberries", "Raspberries"
     ]},
     // Create an object for dairy the same way as protein above
-    {id: 4, value: 0, dairyOptions: [
+    {id: 3, value: 0, dairyOptions: [
         { _milk: [
         "Whole milk", "Skim milk", "Low-fat milk",
         "Fat-free milk", "Almond milk", "Soy milk",
@@ -73,12 +73,12 @@ const ingredientOptions = [
         "Clarified butter", "Cultured butter", "Ghee"
     ]}
     ]},
-    {id: 5, value: 0, oilOptions: [
+    {id: 4, value: 0, oilOptions: [
         "Olive oil", "Canola oil", "Vegetable oil",
         "Coconut oil", "Sesame oil", "Peanut oil", 
         "Avocado oil", "Sunflower oil"
     ]},
-    {id: 6, value: 0, spiceOptions: [
+    {id: 5, value: 0, spiceOptions: [
         "allspice", "anise seed", "caraway", "cardamom", "cayenne pepper",
         "celery seed", "chervil", "chili powder", "cinnamon", "cloves",
         "coriander", "cumin", "curry powder", "dill seed", "fennel",
@@ -90,7 +90,7 @@ const ingredientOptions = [
         "white pepper", "black pepper", "cocoa powder"
     ]},
     // Once again organized as protein and dairy
-    {id: 7, value: 0, miscOptions: [
+    {id: 6, value: 0, miscOptions: [
         { _bread: [
         "Baguette", "Brioche", "Challah",
         "Ciabatta", "Focaccia", "Multigrain",
@@ -121,33 +121,45 @@ const ingredientOptions = [
     ]}
 ]
 
-const defineComposition = (flavor) => {
-    const arrMealComposition = [];
+const createComposition = (flavor) => {
+    const arrMealId = [];
     switch (flavor) {
         case 'Sweet':
             console.log(`You have chosen ${flavor} this will weigh your meal generation appropriately`);
+            ingredientOptions[0].value = 1;
+            ingredientOptions[1].value = 1;
+            ingredientOptions[2].value = 4;
+            ingredientOptions[3].value = 3;
+            ingredientOptions[4].value = 1;
+            ingredientOptions[5].value = 3;
+            ingredientOptions[6].value = 2;
             break;
         case 'Savory':
             console.log(`You have chosen ${flavor} this will weigh your meal generation appropriately`);
-            break;
-        case 'Spicy':
-            console.log(`You have chosen ${flavor} this will weigh your meal generation appropriately`);
-            break;
-        case 'Sour':
-            console.log(`You have chosen ${flavor} this will weigh your meal generation appropriately`);
-            break;
-        case 'Bitter':
-            console.log(`You have chosen ${flavor} this will weigh your meal generation appropriately`);
+            ingredientOptions[0].value = 3;
+            ingredientOptions[1].value = 3;
+            ingredientOptions[2].value = 1;
+            ingredientOptions[3].value = 2;
+            ingredientOptions[4].value = 2;
+            ingredientOptions[5].value = 4;
+            ingredientOptions[6].value = 2;
             break;
         default:
-            console.log(`${flavor} is invalid please choose from Sweet, Savory, Spicy, Sour, or Bitter`);
+            console.log(`${flavor} is invalid please choose from Sweet, or Savory`);
             return;
     }
     for (i = 0; i < 10; i++) {
-        const randomIngredientsId = Object.keys(ingredientOptions)[Math.floor(Math.random() * Object.keys(ingredientOptions).length)];
-        arrMealComposition.push(randomIngredientsId);
+        const randomIngredientsId = ingredientOptions[Math.floor(Math.random() * ingredientOptions.length)].id;
+        if (ingredientOptions[randomIngredientsId].value > 0) {
+            arrMealId.push(randomIngredientsId);
+            ingredientOptions[randomIngredientsId].value -= 1;
+            console.log(`Current value of id ${randomIngredientsId} is ${ingredientOptions[randomIngredientsId].value}`);
+        } else {
+            i--
+        }
+        
    }
-   console.log(arrMealComposition);
+   console.log(`Your meal id is ${arrMealId.join('')}`);
 }
 
-defineComposition('Sweet');
+createComposition('Savory');
