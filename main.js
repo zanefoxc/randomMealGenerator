@@ -1,6 +1,6 @@
 // Create an array to hold ingredient option objects
 const ingredientOptions = [
-    // Create an object with assigned id and value which will be used later
+    // Create objects with assigned Ids and values which will be used later
     // Id 0 Protein Options
     {id: 0, value: 0, options: [
         // Meat
@@ -46,7 +46,6 @@ const ingredientOptions = [
         "Papaya", "Cantaloupe", "Apricots",
         "Blackberries", "Raspberries"
     ]},
-    // Create an object for dairy the same way as protein above
     // Id 3 Diary Options
     {id: 3, value: 0, options: [
         // Milk
@@ -92,7 +91,6 @@ const ingredientOptions = [
         "Wasabi",  "White Pepper",  "Black Pepper",
 
     ]},
-    // Once again organized as protein and dairy
     // Id 6 Misc Options
     {id: 6, value: 0, options: [
         // Bread
@@ -122,10 +120,11 @@ const ingredientOptions = [
         "Ketchup", "Soy sauce", "Worcestershire sauce",
         "Vinegar", "Peanut Butter"
     ]}
-]
+];
 
+// Set values in the data structure based on user input, then generate a meal composition (compositionId) weighted with those values
 const createCompositionId = (flavor) => {
-    const arrMealId = [];
+    const arrCompositionId = [];
     switch (flavor) {
         case 'Sweet':
             console.log(`You have chosen ${flavor} this will weigh your meal generation appropriately`);
@@ -152,30 +151,45 @@ const createCompositionId = (flavor) => {
             return;
     }
     for (i = 0; i < 10; i++) {
-        const randomIngredientsId = ingredientOptions[Math.floor(Math.random() * ingredientOptions.length)].id;
-        if (ingredientOptions[randomIngredientsId].value > 0) {
-            arrMealId.push(randomIngredientsId);
-            ingredientOptions[randomIngredientsId].value -= 1;
+        const randomId = ingredientOptions[Math.floor(Math.random() * ingredientOptions.length)].id;
+        if (ingredientOptions[randomId].value > 0) {
+            arrCompositionId.push(randomId);
+            ingredientOptions[randomId].value -= 1;
         } else {
             i--
         } 
    }
-   console.log(arrMealId);
-   return arrMealId;
+   console.log(`Composition ID: ${arrCompositionId}`);
+   return arrCompositionId;
 }
 
-const ingredientIdAndParser = (mealId) => {
-    const arrIngredientId = []
-    const arrIngredients = mealId.map(num => {
-        const ranOptionIndex = Math.floor(Math.random() * ingredientOptions[num].options.length);
-        arrIngredientId.push(ranOptionIndex);
-        return ingredientOptions[num].options[ranOptionIndex];
-    })
-    return {
-        arrIngredients,
-        arrIngredientId
-    };
+// Create an ingredientId according to the compositionId
+const createIngredientId = (compositionId) => {
+    const arrIngredientId = [];
+        for (const num of compositionId) {
+            const ranOptionIndex = Math.floor(Math.random() * ingredientOptions[num].options.length);
+            arrIngredientId.push(ranOptionIndex);
+        }
+    console.log(`Ingredient ID: ${arrIngredientId}`);
+    return arrIngredientId;
 }
 
-//console.log(createCompositionId('Savory'));
-console.log(ingredientIdAndParser(createCompositionId('Savory')));
+// Combine both Ids to be used in a parser later
+const idCombinator = (compositionId, ingredientId) => {
+    const arrMealId = [];
+    for (let i = 0; i < compositionId.length; i++) {
+        arrMealId.push(compositionId[i]);
+        arrMealId.push(ingredientId[i]);
+    }
+    console.log(`Meal ID: ${arrMealId}`);
+    return arrMealId;
+}
+
+// Parse the meal Id to create a message displaying selected ingredients
+const idParser = (mealId) => {
+    
+}
+
+const compositionSelection = (createCompositionId('Savory'));
+idCombinator(compositionSelection,createIngredientId(compositionSelection));
+
