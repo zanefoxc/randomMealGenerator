@@ -2,7 +2,7 @@
 const ingredientOptions = [
     // Create objects with assigned Ids and values which will be used later
     // Id 0 Protein Options
-    {id: 0, value: 0, options: [
+    {id: 0, value: 0, name:'Protein', options: [
         // Meat
         "Beef", "Pork", "Lamb",
         "Venison", "Rabbit",
@@ -27,7 +27,7 @@ const ingredientOptions = [
         "Soybeans", "Lentils"
     ]},
     // Id 1 Vegetable Options
-    {id: 1, value: 0, options: [
+    {id: 1, value: 0, name:'Vegetable', options: [
         "Broccoli", "Carrots", "Tomatoes",
         "Spinach", "Cabbage", "Bell peppers",
         "Cauliflower", "Eggplant", "Zucchini",
@@ -37,7 +37,7 @@ const ingredientOptions = [
         "Brussels sprouts", "Artichokes"
     ]},
     // Id 2 Fruit Options
-    {id: 2, value: 0, options: [
+    {id: 2, value: 0, name:'Fruit', options: [
         "Apples", "Bananas",  "Oranges",
         "Grapes", "Pineapple", "Strawberries",
         "Blueberries", "Mangoes", "Watermelon",
@@ -46,8 +46,8 @@ const ingredientOptions = [
         "Papaya", "Cantaloupe", "Apricots",
         "Blackberries", "Raspberries"
     ]},
-    // Id 3 Diary Options
-    {id: 3, value: 0, options: [
+    // Id 3 Dairy Options
+    {id: 3, value: 0, name:'Dairy', options: [
         // Milk
         "Whole milk", "Skim milk", "Low-fat milk",
         "Fat-free milk", "Almond milk", "Soy milk",
@@ -73,13 +73,13 @@ const ingredientOptions = [
         "Clarified butter", "Cultured butter", "Ghee"
     ]},
     // Id 4 Oil Options
-    {id: 4, value: 0, options: [
+    {id: 4, value: 0, name:'Oil', options: [
         "Olive oil", "Canola oil", "Vegetable oil",
         "Coconut oil", "Sesame oil", "Peanut oil", 
         "Avocado oil", "Sunflower oil"
     ]},
     // Id 5 Spice Options
-    {id: 5, value: 0, options: [
+    {id: 5, value: 0, name:'Spice', options: [
         "Allspice", "Anise Seed", "Caraway", "Cardamom", "Cocoa Powder",
         "Cayenne Pepper", "Celery Seed", "Chervil", "Chili Powder", 
         "Cinnamon", "Cloves", "Coriander", "Cumin", "Curry Powder", 
@@ -92,7 +92,7 @@ const ingredientOptions = [
 
     ]},
     // Id 6 Misc Options
-    {id: 6, value: 0, options: [
+    {id: 6, value: 0, name:'Misc', options: [
         // Bread
         "Baguette", "Brioche", "Challah",
         "Ciabatta", "Focaccia", "Multigrain",
@@ -174,7 +174,7 @@ const createIngredientId = (compositionId) => {
     return arrIngredientId;
 }
 
-// Combine both Ids to be used in a parser later
+// Combine both Ids to be used in a parser
 const idCombinator = (compositionId, ingredientId) => {
     const arrMealId = [];
     for (let i = 0; i < compositionId.length; i++) {
@@ -184,12 +184,24 @@ const idCombinator = (compositionId, ingredientId) => {
     console.log(`Meal ID: ${arrMealId}`);
     return arrMealId;
 }
-
 // Parse the meal Id to create a message displaying selected ingredients
-const idParser = (mealId) => {
-    
-}
+const parseMealId = (mealId) => {
+    const ingredients = {};
+    for (let i = 0; i < mealId.length; i += 2) {
+      const compositionId = mealId[i];
+      const ingredientId = mealId[i + 1];
+      const compositionName = ingredientOptions[compositionId].name;
+      const ingredientName = ingredientOptions[compositionId].options[ingredientId];
+      if (!ingredients[compositionName]) {
+        ingredients[compositionName] = [];
+      }
+      ingredients[compositionName].push(ingredientName);
+    }
+    return ingredients;
+  }
 
-const compositionSelection = (createCompositionId('Savory'));
-idCombinator(compositionSelection,createIngredientId(compositionSelection));
-
+const compositionId = createCompositionId('Sweet');
+const ingredientId = createIngredientId(compositionId);
+const mealId = idCombinator(compositionId, ingredientId);
+const ingredients = parseMealId(mealId);
+console.log(ingredients);
