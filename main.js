@@ -166,8 +166,8 @@ const createCompositionId = (flavor) => {
 // Create an ingredientId according to the compositionId
 const createIngredientId = (compositionId) => {
     const arrIngredientId = [];
-        for (const num of compositionId) {
-            const ranOptionIndex = Math.floor(Math.random() * ingredientOptions[num].options.length);
+        for (const id of compositionId) {
+            const ranOptionIndex = Math.floor(Math.random() * ingredientOptions[id].options.length);
             arrIngredientId.push(ranOptionIndex);
         }
     console.log(`Ingredient ID: ${arrIngredientId}`);
